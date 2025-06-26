@@ -66,3 +66,24 @@ export const deleteAppointment = (id) => {
     });
   });
 };
+export const updateAppointment = ({
+  id,
+  patient_id,
+  date,
+  time,
+  reason,
+  notes,
+}) => {
+  return new Promise((resolve, reject) => {
+    db.run(
+      `UPDATE appointments
+       SET patient_id = ?, date = ?, time = ?, reason = ?, notes = ?
+       WHERE id = ?`,
+      [patient_id, date, time, reason, notes, id],
+      function (err) {
+        if (err) reject(err);
+        else resolve({ id, patient_id, date, time, reason, notes });
+      }
+    );
+  });
+};
