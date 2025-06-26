@@ -9,31 +9,32 @@ export const getAllPatients = () => {
   });
 };
 
-export const createPatient = ({ name, age, gender }) => {
+export const createPatient = ({ name, age, gender, phone }) => {
   return new Promise((resolve, reject) => {
     db.run(
-      "INSERT INTO patients (name , age ,gender) VALUES(? , ? , ?)",
-      [name, age, gender],
+      "INSERT INTO patients (name, age, gender, phone) VALUES (?, ?, ?, ?)",
+      [name, age, gender, phone],
       function (err) {
         if (err) reject(err);
-        else resolve({ id: this.lastID, name, age, gender });
+        else resolve({ id: this.lastID, name, age, gender, phone });
       }
     );
   });
 };
 
-export const updatePatient = ({ id, name, age, gender }) => {
+export const updatePatient = ({ id, name, age, gender, phone }) => {
   return new Promise((resolve, reject) => {
     db.run(
-      "UPDATE patients SET name = ? , age = ? , gender = ? WHERE id = ?",
-      [name, age, gender, id],
+      "UPDATE patients SET name = ?, age = ?, gender = ?, phone = ? WHERE id = ?",
+      [name, age, gender, phone, id],
       function (err) {
         if (err) reject(err);
-        else resolve({ id, name, age, gender });
+        else resolve({ id, name, age, gender, phone });
       }
     );
   });
 };
+
 export const deletePatient = (id) => {
   return new Promise((resolve, reject) => {
     db.run("DELETE FROM patients WHERE id = ?", [id], function (err) {
@@ -42,6 +43,7 @@ export const deletePatient = (id) => {
     });
   });
 };
+
 export const getPatientById = (id) => {
   return new Promise((resolve, reject) => {
     db.get("SELECT * FROM patients WHERE id = ?", [id], (err, row) => {

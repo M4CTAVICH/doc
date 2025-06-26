@@ -1,19 +1,14 @@
 import db from "./db.js";
 
-db.serialize(() => {
-  db.run(
-    `
-    CREATE TABLE IF NOT EXISTS patients (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      age INTEGER,
-      gender TEXT
-    )
-  `,
-    (err) => {
-      if (err) console.error("Table creation error:", err);
-      else console.log("Patients table ready.");
-      db.close();
+db.run(`ALTER TABLE patients ADD COLUMN phone TEXT`, (err) => {
+  if (err) {
+    if (err.message.includes("duplicate column name")) {
+      console.log("Column 'phone' already exists.");
+    } else {
+      console.error("Error adding phone column:", err.message);
     }
-  );
+  } else {
+    console.log("Column 'phone' added to patients table.");
+  }
+  db.close();
 });
