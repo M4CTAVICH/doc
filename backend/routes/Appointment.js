@@ -5,6 +5,7 @@ import {
   addAppointment,
   editAppointment,
   removeAppointment,
+  fetchAppointmentsByPatientId,
 } from "../controllers/Appointment.js";
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.get("/:id", fetchAppointmentById);
 router.post("/", addAppointment);
 router.put("/:id", editAppointment);
 router.delete("/:id", removeAppointment);
+router.get("/patient/:patient_id", fetchAppointmentsByPatientId);
 
 export default router;

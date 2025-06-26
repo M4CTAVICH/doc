@@ -4,6 +4,7 @@ import {
   createPrescription,
   updatePrescription,
   deletePrescription,
+  getPrescriptionsByPatientId,
 } from "../models/Prescription.js";
 
 export const fetchAllPrescriptions = async (req, res) => {
@@ -50,5 +51,15 @@ export const removePrescription = async (req, res) => {
     else res.status(404).json({ error: "Prescription not found" });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const fetchPrescriptionsByPatientId = async (req, res) => {
+  try {
+    const { patient_id } = req.params;
+    const prescriptions = await getPrescriptionsByPatientId(patient_id);
+    res.json(prescriptions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

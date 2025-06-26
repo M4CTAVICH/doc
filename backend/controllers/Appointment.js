@@ -4,6 +4,7 @@ import {
   createAppointment,
   updateAppointment,
   deleteAppointment,
+  getAppointmentsByPatientId,
 } from "../models/Appointment.js";
 
 export const fetchAllAppointments = async (req, res) => {
@@ -55,5 +56,15 @@ export const removeAppointment = async (req, res) => {
     else res.status(404).json({ error: "Appointment not found" });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const fetchAppointmentsByPatientId = async (req, res) => {
+  try {
+    const { patient_id } = req.params;
+    const appointments = await getAppointmentsByPatientId(patient_id);
+    res.json(appointments);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

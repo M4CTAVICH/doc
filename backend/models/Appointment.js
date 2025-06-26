@@ -87,3 +87,15 @@ export const updateAppointment = ({
     );
   });
 };
+export const getAppointmentsByPatientId = (patient_id) => {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `SELECT * FROM appointments WHERE patient_id = ?`,
+      [patient_id],
+      (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      }
+    );
+  });
+};

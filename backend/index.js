@@ -5,6 +5,7 @@ import patientRoutes from "./routes/Patient.js";
 import dotenv from "dotenv";
 import appointmentRoutes from "./routes/Appointment.js";
 import prescriptionRoutes from "./routes/Prescription.js";
+import visitNoteRoutes from "./routes/VisitNote.js";
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use("/api/patients", patientRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/prescriptions", prescriptionRoutes);
+app.use("/api/visit-notes", visitNoteRoutes);
 app.get("/", (req, res) => {
   res.send("Backend API is running");
 });

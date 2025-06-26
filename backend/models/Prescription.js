@@ -117,3 +117,15 @@ export const deletePrescription = (id) => {
     });
   });
 };
+export const getPrescriptionsByPatientId = (patient_id) => {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `SELECT * FROM prescriptions WHERE patient_id = ?`,
+      [patient_id],
+      (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      }
+    );
+  });
+};
