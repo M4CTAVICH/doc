@@ -75,10 +75,11 @@ export const searchAppointments = async (req, res) => {
     const { name } = req.query;
     const results = await searchAppointmentsByPatientName(name);
     res.json(results);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
+
 export const filterAppointments = async (req, res) => {
   try {
     const { date } = req.query;

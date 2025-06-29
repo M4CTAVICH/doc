@@ -102,10 +102,10 @@ export const getAppointmentsByPatientId = (patient_id) => {
 export const searchAppointmentsByPatientName = (name) => {
   return new Promise((resolve, reject) => {
     db.all(
-      `SELECT appointments.* , patients.name AS patient_name
-      FROM appointments
-      JOIN patients ON appointments.patient_id = patients.id
-      WHERE patients.name LIKE ?`,
+      `SELECT appointments.*, patients.name AS patient_name
+       FROM appointments
+       JOIN patients ON appointments.patient_id = patients.id
+       WHERE patients.name LIKE ?`,
       [`%${name}%`],
       (err, rows) => {
         if (err) reject(err);
@@ -118,10 +118,10 @@ export const searchAppointmentsByPatientName = (name) => {
 export const filterAppointmentsByDate = (date) => {
   return new Promise((resolve, reject) => {
     db.all(
-      `SELECT appointments.* , patients.name AS patient_name 
-      FROM appointments
-      JOIN patients ON appointments.patient_id = patient.id
-      WHERE appointments.data = ?`,
+      `SELECT appointments.*, patients.name AS patient_name
+       FROM appointments
+       JOIN patients ON appointments.patient_id = patients.id
+       WHERE appointments.date = ?`,
       [date],
       (err, rows) => {
         if (err) reject(err);
