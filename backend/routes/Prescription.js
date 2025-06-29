@@ -7,14 +7,30 @@ import {
   removePrescription,
   fetchPrescriptionsByPatientId,
 } from "../controllers/Prescription.js";
+import { authenticate, authorize } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/", fetchAllPrescriptions);
-router.get("/:id", fetchPrescriptionById);
-router.post("/", addPrescription);
-router.put("/:id", editPrescription);
-router.delete("/:id", removePrescription);
-router.get("/patient/:patient_id", fetchPrescriptionsByPatientId);
+router.get(
+  "/",
+  authenticate,
+  authorize(["doctor", "assistant"]),
+  fetchAllPrescriptions
+);
+router.get(
+  "/:id",
+  authenticate,
+  authorize(["doctor", "assistant"]),
+  fetchPrescriptionById
+);
+router.post("/", authenticate, authorize(["doctor"]), addPrescription);
+router.put("/:id", authenticate, authorize(["doctor"]), editPrescription);
+router.delete("/:id", authenticate, authorize(["doctor"]), removePrescription);
+router.get(
+  "/patient/:patient_id",
+  authenticate,
+  authorize(["doctor", "assistant"]),
+  fetchPrescriptionsByPatientId
+);
 
 export default router;
