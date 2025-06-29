@@ -6,6 +6,8 @@ import {
   editAppointment,
   removeAppointment,
   fetchAppointmentsByPatientId,
+  searchAppointments,
+  filterAppointments,
 } from "../controllers/Appointment.js";
 import { authenticate, authorize } from "../middleware/auth.js";
 
@@ -47,5 +49,16 @@ router.get(
   authorize(["doctor", "assistant", "admin"]),
   fetchAppointmentsByPatientId
 );
-
+router.get(
+  "/search",
+  authenticate,
+  authorize(["doctor", "assistant"]),
+  searchAppointments
+);
+router.get(
+  "/filter",
+  authenticate,
+  authorize(["doctor", "assistant"]),
+  filterAppointments
+);
 export default router;

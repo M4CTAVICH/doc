@@ -99,3 +99,34 @@ export const getAppointmentsByPatientId = (patient_id) => {
     );
   });
 };
+export const searchAppointmentsByPatientName = (name) => {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `SELECT appointments.* , patients.name AS patient_name
+      FROM appointments
+      JOIN patients ON appointments.patient_id = patients.id
+      WHERE patients.name LIKE ?`,
+      [`%${name}%`],
+      (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      }
+    );
+  });
+};
+
+export const filterAppointmentsByDate = (date) => {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `SELECT appointments.* , patients.name AS patient_name 
+      FROM appointments
+      JOIN patients ON appointments.patient_id = patient.id
+      WHERE appointments.data = ?`,
+      [date],
+      (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      }
+    );
+  });
+};
