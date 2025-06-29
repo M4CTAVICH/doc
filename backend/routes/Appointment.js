@@ -14,6 +14,19 @@ import { authenticate, authorize } from "../middleware/auth.js";
 const router = express.Router();
 
 router.get(
+  "/search",
+  authenticate,
+  authorize(["doctor", "assistant"]),
+  searchAppointments
+);
+router.get(
+  "/filter",
+  authenticate,
+  authorize(["doctor", "assistant"]),
+  filterAppointments
+);
+
+router.get(
   "/",
   authenticate,
   authorize(["doctor", "assistant", "admin"]),
@@ -49,16 +62,5 @@ router.get(
   authorize(["doctor", "assistant", "admin"]),
   fetchAppointmentsByPatientId
 );
-router.get(
-  "/search",
-  authenticate,
-  authorize(["doctor", "assistant"]),
-  searchAppointments
-);
-router.get(
-  "/filter",
-  authenticate,
-  authorize(["doctor", "assistant"]),
-  filterAppointments
-);
+
 export default router;
