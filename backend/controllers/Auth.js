@@ -7,6 +7,12 @@ const JWT_SECRET = process.env.JWT_SECRET;
 export const register = async (req, res) => {
   try {
     const { username, password, role, name } = req.body;
+    // Only allow assistants to self-register
+    if (role !== "assistant") {
+      return res
+        .status(400)
+        .json({ error: "You can only register as assistant." });
+    }
     const existing = await getUserByUsername(username);
     if (existing)
       return res.status(400).json({ error: "Username already exists" });
