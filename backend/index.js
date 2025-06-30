@@ -8,6 +8,7 @@ import prescriptionRoutes from "./routes/Prescription.js";
 import visitNoteRoutes from "./routes/VisitNote.js";
 import financeRoutes from "./routes/Finance.js";
 import authRoutes from "./routes/Auth.js";
+import messageRoutes from "./routes/Message.js";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use("/api/prescriptions", prescriptionRoutes);
 app.use("/api/visit-notes", visitNoteRoutes);
 app.use("/api/finance", financeRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 app.get("/", (req, res) => {
   res.send("Backend API is running");
 });
